@@ -1,0 +1,11 @@
+{
+  "entryPoints": [
+    "src/types/plugin-example-config.ts"
+  ],
+  "out": "docs/api",
+  "excludePrivate": true,
+  "excludeProtected": true,
+  "excludeInternal": true,
+  "entryPointStrategy": "expand",
+  "theme": "default"
+}
