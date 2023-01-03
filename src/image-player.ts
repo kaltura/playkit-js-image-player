@@ -1,37 +1,82 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// These lint rules are temporarily disabled until our fully typescript support is added
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-empty-function */
+
 // @ts-ignore
-import { IEngine, FakeEventTarget, FakeEvent, EventManager, getLogger, Utils } from '@playkit-js/playkit-js';
+import { IEngine, FakeEventTarget, FakeEvent, EventManager, EventType, getLogger, Utils } from '@playkit-js/playkit-js';
 
 export class ImagePlayer extends FakeEventTarget implements IEngine {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   constructor(source: any, config: any) {
     super();
     this.eventManager = new EventManager();
     this.createVideoElement();
     this.init(source, config);
-    // setTimeout(() => this.load(0));
   }
 
-  private eventManager: EventManager;
-  private el!: HTMLImageElement;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private source: any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private config: any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public static _logger: any = getLogger('image');
   public static id = 'image';
+  private eventManager: EventManager;
+  private el!: HTMLImageElement;
+  private source: any;
+  private config: any;
+  private imageLoaded!: Promise<{ tracks: [] }>;
+
+  private createVideoElement(): void {
+    this.el = document.createElement('img');
+    this.el.id = Utils.Generator.uniqueId(5);
+  }
+
+  private init(source: any, config: any): void {
+    this.source = source;
+    this.config = config;
+  }
+
+  public load(startTime: number): Promise<{ tracks: [] }> {
+    this.imageLoaded = new Promise((resolve, reject) => {
+      this.el.addEventListener('load', () => {
+        this.onImageLoaded(resolve);
+      });
+      // @ts-ignore
+      this.dispatchEvent(new FakeEvent(EventType.LOAD_START));
+      this.el.src = this.source.url;
+    });
+    return this.imageLoaded;
+  }
+
+  public play(): Promise<void> {
+    // @ts-ignore
+    this.dispatchEvent(new FakeEvent(EventType.PLAYBACK_START));
+    // @ts-ignore
+    this.dispatchEvent(new FakeEvent(EventType.PLAY));
+    // @ts-ignore
+    this.dispatchEvent(new FakeEvent(EventType.FIRST_PLAY));
+    return Promise.resolve(undefined);
+  }
+
+  private onImageLoaded(resolve: (value: { tracks: [] }) => void): void {
+    resolve({ tracks: [] });
+    setTimeout(() => {
+      // @ts-ignore
+      this.dispatchEvent(new FakeEvent(EventType.LOADED_METADATA, 12121));
+      // @ts-ignore
+      this.dispatchEvent(new FakeEvent(EventType.LOADED_DATA, 12121));
+      // @ts-ignore
+      this.dispatchEvent(new FakeEvent(EventType.PLAYING));
+      // @ts-ignore
+      this.dispatchEvent(new FakeEvent(EventType.FIRST_PLAYING));
+    });
+  }
 
   public static isSupported(): boolean {
     return true;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-explicit-any
   public static createEngine(source: any, config: any): IEngine {
     return new this(source, config);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-explicit-any
   public static canPlaySource(source: any): boolean {
     return true;
   }
@@ -40,7 +85,6 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
     return;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public static getCapabilities(): Promise<any> {
     const capabilities = {
       [ImagePlayer.id]: {
@@ -51,40 +95,24 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
   }
 
   public static prepareVideoElement(): void {
-    ImagePlayer._logger.debug('Prepare the video element for playing not supported');
+    ImagePlayer._logger.debug('Prepare the Image element for playing not supported');
   }
 
-  public attach(): void {
-    return;
-  }
+  public attach(): void {}
 
-  public attachMediaSource(): void {
-    return;
-  }
+  public attachMediaSource(): void {}
 
-  public destroy(): void {
-    return;
-  }
+  public destroy(): void {}
 
-  public detach(): void {
-    return;
-  }
+  public detach(): void {}
 
-  public detachMediaSource(): void {
-    return;
-  }
+  public detachMediaSource(): void {}
 
-  public enableAdaptiveBitrate(): void {
-    return;
-  }
+  public enableAdaptiveBitrate(): void {}
 
-  public enterPictureInPicture(): void {
-    return;
-  }
+  public enterPictureInPicture(): void {}
 
-  public exitPictureInPicture(): void {
-    return;
-  }
+  public exitPictureInPicture(): void {}
 
   public getStartTimeOfDvrWindow(): number {
     return 0;
@@ -94,9 +122,7 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
     return this.el;
   }
 
-  public hideTextTrack(): void {
-    return;
-  }
+  public hideTextTrack(): void {}
 
   public isAdaptiveBitrateEnabled(): boolean {
     return false;
@@ -110,71 +136,33 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
     return false;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/no-unused-vars
-  public load(startTime: number): Promise<{ tracks: [] }> {
-    this.el.src = this.source.url;
-    this.play();
-    // return this.play().then(() => ({ tracks: [] }));
-    return Promise.resolve({ tracks: [] });
-  }
+  public pause(): void {}
 
-  public pause(): void {
-    return;
-  }
+  public reset(): void {}
 
-  public play(): Promise<void> {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    this.dispatchEvent(new FakeEvent('play', '121'));
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    this.dispatchEvent(new FakeEvent('playing', '121'));
-    return Promise.resolve(undefined);
-  }
+  public resetAllCues(): void {}
 
-  public reset(): void {
-    return;
-  }
+  public restore(source: any, config: any): void {}
 
-  public resetAllCues(): void {
-    return;
-  }
+  public seekToLiveEdge(): void {}
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-explicit-any
-  public restore(source: any, config: any): void {
-    return;
-  }
+  public selectAudioTrack(audioTrack: any): void {}
 
-  public seekToLiveEdge(): void {
-    return;
-  }
+  public selectTextTrack(textTrack: TextTrack): void {}
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-explicit-any
-  public selectAudioTrack(audioTrack: any): void {
-    return;
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public selectTextTrack(textTrack: TextTrack): void {
-    return;
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-explicit-any
-  public selectVideoTrack(videoTrack: any): void {
-    return;
-  }
-
-  private createVideoElement() {
-    this.el = document.createElement('img');
-    this.el.id = Utils.Generator.uniqueId(5);
-  }
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private init(source: any, config: any) {
-    this.source = source;
-    this.config = config;
-  }
+  public selectVideoTrack(videoTrack: any): void {}
 
   public get playbackRates(): number[] {
     return [1];
   }
+
+  public get duration(): number {
+    return 0;
+  }
+
+  public get currentTime(): number {
+    return 0;
+  }
+
+  public set currentTime(to: number) {}
 }

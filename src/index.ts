@@ -5,29 +5,6 @@ import { ImagePlayer } from './image-player';
 
 registerEngine(ImagePlayer.id, ImagePlayer);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // public autoplay: boolean;
 // public availableBuffer: number;
 // public buffered: TimeRanges;
@@ -59,3 +36,4 @@ registerEngine(ImagePlayer.id, ImagePlayer);
 // public videoHeight: number;
 // public videoWidth: number;
 // public volume: number;
+// this.dispatchEvent(new FakeEvent(EventType.MEDIA_LOADED, 12121)); // fired by the player
