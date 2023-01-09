@@ -6,13 +6,15 @@
 
 // @ts-ignore
 import { IEngine, FakeEventTarget, FakeEvent, EventManager, EventType, getLogger, Utils } from '@playkit-js/playkit-js';
+import { defaultThumbnailApiParams, ThumbnailApiParams } from './default-thumbnail-api-params';
 
 export class ImagePlayer extends FakeEventTarget implements IEngine {
   constructor(source: any, config: any) {
     super();
     this.eventManager = new EventManager();
-    this.createVideoElement();
-    this.init(source, config);
+    this.source = source;
+    this.config = config;
+    this.init(source);
   }
 
   public static _logger: any = getLogger('image');
@@ -28,9 +30,9 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
     this.el.id = Utils.Generator.uniqueId(5);
   }
 
-  private init(source: any, config: any): void {
-    this.source = source;
-    this.config = config;
+  private init(source: any): void {
+    this.createVideoElement();
+    this.concatenateThumbnailParams(source);
   }
 
   public load(startTime: number): Promise<{ tracks: [] }> {
@@ -67,6 +69,23 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
       // @ts-ignore
       this.dispatchEvent(new FakeEvent(EventType.FIRST_PLAYING));
     });
+  }
+
+  private concatenateThumbnailParams(source: any): void {
+    const thumbnailAPIParams: ThumbnailApiParams = {
+      width: this.getPlayerWidth(),
+      ...(!this.config.session.isAnonymous && { ks: this.config.session.ks }),
+      ...defaultThumbnailApiParams,
+      ...this.config?.imageSourceOptions?.thumbnailAPIParams
+    };
+
+    Object.keys(thumbnailAPIParams).forEach((parmaName: string) => {
+      source.url += `/${parmaName}/${thumbnailAPIParams[parmaName as keyof ThumbnailApiParams]}`;
+    });
+  }
+
+  private getPlayerWidth(): number {
+    return document.getElementById(this.config.targetId)!.offsetWidth;
   }
 
   public static isSupported(): boolean {
