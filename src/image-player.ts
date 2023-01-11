@@ -232,6 +232,18 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
     this.dispatchEvent(new FakeEvent(EventType.SEEKED));
   }
 
+  public get buffered(): TimeRanges {
+    return {
+      start(index: number): number {
+        return 0;
+      },
+      end(index: number): number {
+        return 0;
+      },
+      length: 0
+    };
+  }
+
   private getThumbnail(time: number): null {
     return null;
   }
