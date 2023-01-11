@@ -228,6 +228,8 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
 
   public set currentTime(to: number) {
     this.time = to;
+    // @ts-ignore
+    this.dispatchEvent(new FakeEvent(EventType.SEEKED));
   }
 
   private getThumbnail(time: number): null {
