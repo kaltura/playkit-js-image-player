@@ -31,6 +31,7 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
   }
 
   private init(source: any): void {
+    this.setDefaultConfig();
     this.createVideoElement();
     this.concatenateThumbnailParams(source);
   }
@@ -61,9 +62,9 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
     resolve({ tracks: [] });
     setTimeout(() => {
       // @ts-ignore
-      this.dispatchEvent(new FakeEvent(EventType.LOADED_METADATA, 12121));
+      this.dispatchEvent(new FakeEvent(EventType.LOADED_METADATA));
       // @ts-ignore
-      this.dispatchEvent(new FakeEvent(EventType.LOADED_DATA, 12121));
+      this.dispatchEvent(new FakeEvent(EventType.LOADED_DATA));
       // @ts-ignore
       this.dispatchEvent(new FakeEvent(EventType.PLAYING));
       // @ts-ignore
@@ -184,4 +185,8 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
   }
 
   public set currentTime(to: number) {}
+
+  private setDefaultConfig(): void {
+    this.config.playback.autoplay = true;
+  }
 }
