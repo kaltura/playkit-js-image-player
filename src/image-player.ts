@@ -7,16 +7,9 @@
 // @ts-ignore
 import { IEngine, FakeEventTarget, FakeEvent, EventManager, EventType, getLogger, Utils } from '@playkit-js/playkit-js';
 import { defaultThumbnailApiParams, ThumbnailApiParams } from './default-thumbnail-api-params';
+import Timeout = NodeJS.Timeout;
 
 export class ImagePlayer extends FakeEventTarget implements IEngine {
-  constructor(source: any, config: any) {
-    super();
-    this.eventManager = new EventManager();
-    this.source = source;
-    this.config = config;
-    this.init(source);
-  }
-
   public static _logger: any = getLogger('image');
   public static id = 'image';
   private eventManager: EventManager;
@@ -24,16 +17,45 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
   private source: any;
   private config: any;
   private imageLoaded!: Promise<{ tracks: [] }>;
+  private time: number;
+  private intervalID!: Timeout;
+  private isFirstPlay: boolean;
 
-  private createVideoElement(): void {
-    this.el = document.createElement('img');
-    this.el.id = Utils.Generator.uniqueId(5);
+  constructor(source: any, config: any) {
+    super();
+    this.eventManager = new EventManager();
+    this.source = source;
+    this.config = config;
+    this.time = 0;
+    this.isFirstPlay = true;
+    this.init(source);
   }
 
   private init(source: any): void {
     this.setDefaultConfig();
     this.createVideoElement();
     this.concatenateThumbnailParams(source);
+  }
+
+  private setDefaultConfig(): void {
+    this.config.playback.autoplay = true;
+  }
+
+  private createVideoElement(): void {
+    this.el = document.createElement('img');
+    this.el.id = Utils.Generator.uniqueId(5);
+  }
+
+  private activateTimer(): void {
+    this.intervalID = setInterval(() => {
+      this.time++;
+      // @ts-ignore
+      this.dispatchEvent(new FakeEvent(EventType.TIME_UPDATE));
+    }, 1000);
+  }
+
+  private deactivateTimer(): void {
+    clearInterval(this.intervalID);
   }
 
   public load(startTime: number): Promise<{ tracks: [] }> {
@@ -49,12 +71,20 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
   }
 
   public play(): Promise<void> {
+    if (this.config.sources.duration > 0) this.activateTimer();
     // @ts-ignore
     this.dispatchEvent(new FakeEvent(EventType.PLAYBACK_START));
+
     // @ts-ignore
     this.dispatchEvent(new FakeEvent(EventType.PLAY));
+
+    if (this.isFirstPlay) {
+      // @ts-ignore
+      this.dispatchEvent(new FakeEvent(EventType.FIRST_PLAY));
+      this.isFirstPlay = false;
+    }
     // @ts-ignore
-    this.dispatchEvent(new FakeEvent(EventType.FIRST_PLAY));
+    this.dispatchEvent(new FakeEvent(EventType.DURATION_CHANGE));
     return Promise.resolve(undefined);
   }
 
@@ -122,7 +152,10 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
 
   public attachMediaSource(): void {}
 
-  public destroy(): void {}
+  public destroy(): void {
+    this.reset();
+    this.el.remove();
+  }
 
   public detach(): void {}
 
@@ -156,9 +189,18 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
     return false;
   }
 
-  public pause(): void {}
+  public pause(): void {
+    this.deactivateTimer();
+    // @ts-ignore
+    this.dispatchEvent(new FakeEvent(EventType.PAUSE));
+  }
 
-  public reset(): void {}
+  public reset(): void {
+    this.el.setAttribute('src', '');
+    this.deactivateTimer();
+    this.isFirstPlay = true;
+    this.time = 0;
+  }
 
   public resetAllCues(): void {}
 
@@ -177,16 +219,18 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
   }
 
   public get duration(): number {
-    return 0;
+    return this.config.sources.duration;
   }
 
   public get currentTime(): number {
-    return 0;
+    return this.time;
   }
 
-  public set currentTime(to: number) {}
+  public set currentTime(to: number) {
+    this.time = to;
+  }
 
-  private setDefaultConfig(): void {
-    this.config.playback.autoplay = true;
+  private getThumbnail(time: number): null {
+    return null;
   }
 }
