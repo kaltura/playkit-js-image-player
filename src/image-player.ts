@@ -27,7 +27,6 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
     this.eventManager = new EventManager();
     this.source = source;
     this.config = config;
-    this.config.sources.duration = 100;
     this._currentTime = 0;
     this._playbackRate = 1;
     this.timer = new Timer(this);
