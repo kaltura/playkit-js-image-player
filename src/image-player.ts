@@ -7,7 +7,7 @@
 // @ts-ignore
 import { IEngine, FakeEventTarget, FakeEvent, EventManager, EventType, getLogger, Utils } from '@playkit-js/playkit-js';
 import { defaultThumbnailApiParams, ThumbnailApiParams } from './default-thumbnail-api-params';
-import Timeout = NodeJS.Timeout;
+import { Timer } from './timer';
 
 export class ImagePlayer extends FakeEventTarget implements IEngine {
   public static _logger: any = getLogger('image');
@@ -17,8 +17,9 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
   private source: any;
   private config: any;
   private imageLoaded!: Promise<{ tracks: [] }>;
-  private time: number;
-  private intervalID!: Timeout;
+  public _currentTime: number;
+  private _playbackRate: number;
+  private timer: Timer;
   private isFirstPlay: boolean;
 
   constructor(source: any, config: any) {
@@ -26,7 +27,10 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
     this.eventManager = new EventManager();
     this.source = source;
     this.config = config;
-    this.time = 0;
+    this.config.sources.duration = 100;
+    this._currentTime = 0;
+    this._playbackRate = 1;
+    this.timer = new Timer(this);
     this.isFirstPlay = true;
     this.init(source);
   }
@@ -46,18 +50,6 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
     this.el.id = Utils.Generator.uniqueId(5);
   }
 
-  private activateTimer(): void {
-    this.intervalID = setInterval(() => {
-      this.time++;
-      // @ts-ignore
-      this.dispatchEvent(new FakeEvent(EventType.TIME_UPDATE));
-    }, 1000);
-  }
-
-  private deactivateTimer(): void {
-    clearInterval(this.intervalID);
-  }
-
   public load(startTime: number): Promise<{ tracks: [] }> {
     this.imageLoaded = new Promise((resolve, reject) => {
       this.el.addEventListener('load', () => {
@@ -71,7 +63,7 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
   }
 
   public play(): Promise<void> {
-    if (this.config.sources.duration > 0) this.activateTimer();
+    if (this.config.sources.duration > 0) this.timer.on(this.playbackRate);
     // @ts-ignore
     this.dispatchEvent(new FakeEvent(EventType.PLAYBACK_START));
 
@@ -190,16 +182,16 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
   }
 
   public pause(): void {
-    this.deactivateTimer();
+    this.timer.off();
     // @ts-ignore
     this.dispatchEvent(new FakeEvent(EventType.PAUSE));
   }
 
   public reset(): void {
     this.el.setAttribute('src', '');
-    this.deactivateTimer();
+    this.timer.off();
     this.isFirstPlay = true;
-    this.time = 0;
+    this._currentTime = 0;
   }
 
   public resetAllCues(): void {}
@@ -215,7 +207,18 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
   public selectVideoTrack(videoTrack: any): void {}
 
   public get playbackRates(): number[] {
-    return [1];
+    return [0.5, 1, 1.5, 2];
+  }
+
+  public set playbackRate(playbackRate: number) {
+    this._playbackRate = playbackRate;
+    this.timer.speed(playbackRate);
+    // @ts-ignore
+    this.dispatchEvent(new FakeEvent(EventType.RATE_CHANGE));
+  }
+
+  public get playbackRate(): number {
+    return this._playbackRate;
   }
 
   public get duration(): number {
@@ -223,11 +226,11 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
   }
 
   public get currentTime(): number {
-    return this.time;
+    return this._currentTime;
   }
 
   public set currentTime(to: number) {
-    this.time = to;
+    this._currentTime = to;
     // @ts-ignore
     this.dispatchEvent(new FakeEvent(EventType.SEEKED));
   }
