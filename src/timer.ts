@@ -13,6 +13,11 @@ export class Timer {
       this.engine._currentTime++;
       // @ts-ignore
       this.engine.dispatchEvent(new FakeEvent(EventType.TIME_UPDATE));
+      if (this.engine._currentTime >= this.engine.duration) {
+        this.off();
+        // @ts-ignore
+        this.engine.dispatchEvent(new FakeEvent(EventType.ENDED));
+      }
     }, playbackRate * 1000);
   }
 

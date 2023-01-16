@@ -246,7 +246,7 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
     };
   }
 
-  private getThumbnail(time: number): null {
+  public getThumbnail(time: number): null {
     return null;
   }
 }
