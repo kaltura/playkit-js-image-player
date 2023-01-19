@@ -10,7 +10,7 @@ import { defaultThumbnailApiParams, ThumbnailApiParams } from './default-thumbna
 import { Timer } from './timer';
 
 export class ImagePlayer extends FakeEventTarget implements IEngine {
-  public static _logger: any = getLogger('image');
+  public static _logger: any = getLogger('Image');
   public static id = 'image';
   private eventManager: EventManager;
   private el!: HTMLImageElement;
@@ -23,17 +23,17 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
   constructor(source: any, config: any) {
     super();
     this.eventManager = new EventManager();
-    this.source = source;
-    this.config = config;
     this._playbackRate = 1;
     this.timer = new Timer();
     this.isFirstPlay = true;
-    this.init(source);
+    this.createImageElement();
+    this.init(source, config);
   }
 
-  private init(source: any): void {
+  private init(source: any, config: any): void {
+    this.source = source;
+    this.config = config;
     this.setDefaultConfig();
-    this.createVideoElement();
     this.concatenateThumbnailParams(source);
     this.attach();
   }
@@ -42,7 +42,7 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
     this.config.playback.autoplay = true;
   }
 
-  private createVideoElement(): void {
+  private createImageElement(): void {
     this.el = document.createElement('img');
     this.el.id = Utils.Generator.uniqueId(5);
   }
@@ -196,15 +196,19 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
   }
 
   public reset(): void {
-    this.eventManager.reset();
-    this.el.setAttribute('src', '');
+    this.eventManager.removeAll();
+    // this.el.setAttribute('src', '');
     this.isFirstPlay = true;
+    this.playbackRate = 1;
     this.timer.reset();
   }
 
   public resetAllCues(): void {}
 
-  public restore(source: any, config: any): void {}
+  public restore(source: any, config: any): void {
+    this.reset();
+    this.init(source, config);
+  }
 
   public seekToLiveEdge(): void {}
 

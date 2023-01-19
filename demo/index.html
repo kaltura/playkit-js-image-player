@@ -22,9 +22,14 @@
 
       const player = KalturaPlayer.setup(config);
 
-      // player.loadPlaylist({playlistId: '1_ddzzogfp'}, {options: {autoContinue: false}});
+      // Images and videos mix playlist
+      player.loadPlaylist({playlistId: '1_ddzzogfp'}, {options: {autoContinue: false}});
 
-      player.loadMedia({entryId: '1_ktrfo5hl'});
+      // Images only playlist
+      // player.loadPlaylist({playlistId: '1_1b6sw5ze'}, {options: {autoContinue: true}});
+
+      // player.loadMedia({entryId: '1_ktrfo5hl'});
+      // player.loadMedia({entryId: '1_l8avkmiw'});
 
     </script>
   </body>

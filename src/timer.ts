@@ -18,7 +18,6 @@ export class Timer extends FakeEventTarget {
     this.duration = duration;
     this.handleRestart();
     this.intervalID = setInterval(() => {
-      // setImmediate(() => (this._currentTime += this.TIME_UPDATE_RATE / 1000));
       this._currentTime += this.TIME_UPDATE_RATE / 1000;
       // @ts-ignore
       this.dispatchEvent(new FakeEvent(EventType.TIME_UPDATE));
