@@ -196,6 +196,7 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
   }
 
   public reset(): void {
+    this.eventManager.reset();
     this.el.setAttribute('src', '');
     this.isFirstPlay = true;
     this.timer.reset();
