@@ -90,7 +90,7 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
     this.dispatchEvent(new FakeEvent(EventType.PLAYING));
     // @ts-ignore
     if (this.isFirstPlay) this.dispatchEvent(new FakeEvent(EventType.FIRST_PLAYING));
-    return Promise.resolve(undefined);
+    return Promise.resolve();
   }
 
   private isTimedImage(): boolean {
