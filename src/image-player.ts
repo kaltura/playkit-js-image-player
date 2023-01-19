@@ -16,8 +16,6 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
   private el!: HTMLImageElement;
   private source: any;
   private config: any;
-  private imageLoaded!: Promise<{ tracks: [] }>;
-  public _currentTime: number;
   private _playbackRate: number;
   private timer: Timer;
   private isFirstPlay: boolean;
@@ -27,9 +25,8 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
     this.eventManager = new EventManager();
     this.source = source;
     this.config = config;
-    this._currentTime = 0;
     this._playbackRate = 1;
-    this.timer = new Timer(this);
+    this.timer = new Timer();
     this.isFirstPlay = true;
     this.init(source);
   }
@@ -38,6 +35,7 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
     this.setDefaultConfig();
     this.createVideoElement();
     this.concatenateThumbnailParams(source);
+    this.attach();
   }
 
   private setDefaultConfig(): void {
@@ -49,20 +47,31 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
     this.el.id = Utils.Generator.uniqueId(5);
   }
 
-  public load(startTime: number): Promise<{ tracks: [] }> {
-    this.imageLoaded = new Promise((resolve, reject) => {
-      this.el.addEventListener('load', () => {
-        this.onImageLoaded(resolve);
-      });
+  public async load(startTime: number): Promise<{ tracks: [] }> {
+    return new Promise((resolve, reject) => {
+      this.el.onload = (): void => {
+        resolve({ tracks: [] });
+        this.onImageLoaded();
+      };
+      this.el.onerror = (error): void => {
+        ImagePlayer._logger.error(`The image failed to load, img url:${this.source.url}`, error);
+        reject(error);
+      };
       // @ts-ignore
       this.dispatchEvent(new FakeEvent(EventType.LOAD_START));
       this.el.src = this.source.url;
     });
-    return this.imageLoaded;
+  }
+
+  private attach(): void {
+    // @ts-ignore
+    this.eventManager.listen(this.timer, EventType.ENDED, (event: FakeEvent) => this.dispatchEvent(event));
+    // @ts-ignore
+    this.eventManager.listen(this.timer, EventType.TIME_UPDATE, (event: FakeEvent) => this.dispatchEvent(event));
   }
 
   public play(): Promise<void> {
-    if (this.config.sources.duration > 0) this.timer.on(this.playbackRate);
+    if (this.isTimedImage()) this.timer.start(this.duration);
     // @ts-ignore
     this.dispatchEvent(new FakeEvent(EventType.PLAYBACK_START));
 
@@ -76,21 +85,23 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
     }
     // @ts-ignore
     this.dispatchEvent(new FakeEvent(EventType.DURATION_CHANGE));
+
+    // @ts-ignore
+    this.dispatchEvent(new FakeEvent(EventType.PLAYING));
+    // @ts-ignore
+    if (this.isFirstPlay) this.dispatchEvent(new FakeEvent(EventType.FIRST_PLAYING));
     return Promise.resolve(undefined);
   }
 
-  private onImageLoaded(resolve: (value: { tracks: [] }) => void): void {
-    resolve({ tracks: [] });
-    setTimeout(() => {
-      // @ts-ignore
-      this.dispatchEvent(new FakeEvent(EventType.LOADED_METADATA));
-      // @ts-ignore
-      this.dispatchEvent(new FakeEvent(EventType.LOADED_DATA));
-      // @ts-ignore
-      this.dispatchEvent(new FakeEvent(EventType.PLAYING));
-      // @ts-ignore
-      this.dispatchEvent(new FakeEvent(EventType.FIRST_PLAYING));
-    });
+  private isTimedImage(): boolean {
+    return this.config.sources.duration > 0;
+  }
+
+  private onImageLoaded(): void {
+    // @ts-ignore
+    this.dispatchEvent(new FakeEvent(EventType.LOADED_METADATA));
+    // @ts-ignore
+    this.dispatchEvent(new FakeEvent(EventType.LOADED_DATA));
   }
 
   private concatenateThumbnailParams(source: any): void {
@@ -136,10 +147,8 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
   }
 
   public static prepareVideoElement(): void {
-    ImagePlayer._logger.debug('Prepare the Image element for playing not supported');
+    ImagePlayer._logger.debug('Prepare the Image element');
   }
-
-  public attach(): void {}
 
   public attachMediaSource(): void {}
 
@@ -181,16 +190,15 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
   }
 
   public pause(): void {
-    this.timer.off();
+    this.timer.pause();
     // @ts-ignore
     this.dispatchEvent(new FakeEvent(EventType.PAUSE));
   }
 
   public reset(): void {
     this.el.setAttribute('src', '');
-    this.timer.off();
     this.isFirstPlay = true;
-    this._currentTime = 0;
+    this.timer.reset();
   }
 
   public resetAllCues(): void {}
@@ -204,6 +212,10 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
   public selectTextTrack(textTrack: TextTrack): void {}
 
   public selectVideoTrack(videoTrack: any): void {}
+
+  public get id(): string {
+    return ImagePlayer.id;
+  }
 
   public get playbackRates(): number[] {
     return [0.5, 1, 1.5, 2];
@@ -225,11 +237,11 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
   }
 
   public get currentTime(): number {
-    return this._currentTime;
+    return this.timer.currentTime;
   }
 
   public set currentTime(to: number) {
-    this._currentTime = to;
+    this.timer.seek(to);
     // @ts-ignore
     this.dispatchEvent(new FakeEvent(EventType.SEEKED));
   }

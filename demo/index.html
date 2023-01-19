@@ -16,12 +16,15 @@
         logLevel: 'DEBUG',
         targetId: 'player-placeholder',
         provider: {
-          partnerId: 811441,
+          partnerId: 2068231,
         },
       };
 
       const player = KalturaPlayer.setup(config);
-      player.loadMedia({entryId: '1_ckwy72q7'});
+
+      // player.loadPlaylist({playlistId: '1_ddzzogfp'}, {options: {autoContinue: false}});
+
+      player.loadMedia({entryId: '1_ktrfo5hl'});
 
     </script>
   </body>
