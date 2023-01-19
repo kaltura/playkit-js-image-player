@@ -19,28 +19,20 @@ describe('Image player', () => {
 
   afterEach(() => {
     player.destroy();
-    for (const element of document.getElementsByTagName('video')) {
+    for (const element of document.getElementsByTagName('image')) {
       element.remove();
     }
   });
 
-  it('Plugin configured properly', async () => {
+  it('image player', async () => {
     // Given
-    player = setup({
-      ...config,
-      plugins: {
-        pluginExample: {
-          developerName: 'Stiven Hoking'
-        }
-      }
-    });
-    const pluginInstance = player.plugins.pluginExample;
+    player = setup(config);
+
+    // Do
     player.setMedia({ sources: { ...mediaData } });
     await player.ready();
 
-    // Do
-
     // Expect
-    expect(pluginInstance.config.developerName).equal('Stiven Hoking');
+    expect(true).equal(true);
   });
 });

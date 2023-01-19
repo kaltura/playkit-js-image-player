@@ -14,10 +14,11 @@ module.exports = function (config) {
     // list of files / patterns to load in the browser
     // https://github.com/webpack-contrib/karma-webpack#alternative-usage
     files: [
+      'node_modules/regenerator-runtime/runtime.js',
       {
         pattern: 'tests/index.js',
-        watched: false,
-      },
+        watched: false
+      }
     ],
 
     // list of files to exclude
