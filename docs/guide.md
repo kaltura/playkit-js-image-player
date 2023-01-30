@@ -1,51 +1,51 @@
 # usage guide
 
 - [Getting started](#getting-started)
-    - [Setup](#setup)
-    - [Configuration](#configuration)
-- [Full working example](https://github.com/kaltura/playkit-js-plugin-example/tree/master/demo)
+- [Setup](#setup)
+- [Full working example](https://github.com/kaltura/playkit-js-image-player/tree/master/demo)
 
 ## Getting started
 
 ### Setup
 
-First include `playkit-plugin-example.js` **after** kaltura-player script in your web page.
+First include `playkit-image-player.js` **after** kaltura-player script in your web page.
 
 ```html
   <script src="https://raw.githack.com/kaltura/kaltura-player-js/master/dist/kaltura-ovp-player.js"></script>
-  <script src="./playkit-plugin-example.js"></script>
+  <script src="./playkit-image-player.js"></script>
 ```
 
-Add the plugin-example to the player config under the plugins section.
+Load an image entry, and add your (optional) configuration
+
+The only configuration image player gets is the Thumbnail API configuration Parameters (relevant only when your load your entry from kaltura cdn)
+
+You can see [here](https://developer.kaltura.com/api-docs/Engage_and_Publish/kaltura-thumbnail-api.html) the full Thumbnail API configuration Parameters options
 
 ```js
     const config = {
       targetId: 'player-placeholder',
       provider: {
-        partnerId: 1234567,
+        partnerId: '<YOUR_PARTNERI_ID>',
       },
-      plugins: {
-        pluginExample: {},
+      imageSourceOptions: {
+          thumbnailAPIParams: {
+            // Put here the Thumbnail API configuration Parameters
       }
     };
 
-const player = KalturaPlayer.setup(config);
+    const player = KalturaPlayer.setup(config);
+
+    player.loadMedia({ entryId: '1_ktrfo5hl' });
 ```
 
 ### Configuration
 
-You can see the **Example plugin** full configuration options [here](https://kaltura.github.io/playkit-js-plugin-example/docs/api/<PATH-TO-YOUR-CONFIGURATION-DOC-FILE>)
-
-You can find configuration example [here](https://github.com/kaltura/playkit-js-plugin-example/tree/master/demo/index.html)
+You can see the full Thumbnail API configuration Parameters options [here](https://developer.kaltura.com/api-docs/Engage_and_Publish/kaltura-thumbnail-api.html)
 
 ## Full working example
 
-You can find Full working example [here](https://github.com/kaltura/playkit-js-plugin-example/tree/master/demo)
-
-## API docs
-
-[API docs](https://kaltura.github.io/playkit-js-plugin-example/docs/api/index.html)
+You can find Full working example [here](https://github.com/kaltura/playkit-js-image-player/blob/master/demo/index.html)
 
 ## Demo
 
-[demo](https://kaltura.github.io/playkit-js-plugin-example/demo/index.html)
+[demo](https://kaltura.github.io/playkit-js-image-player/demo/index.html)

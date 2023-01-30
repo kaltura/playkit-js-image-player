@@ -107,7 +107,7 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
   private concatenateThumbnailParams(source: any): void {
     const thumbnailAPIParams: ThumbnailApiParams = {
       width: this.getPlayerWidth(),
-      ...(!this.config.session.isAnonymous && { ks: this.config.session.ks }),
+      ...(this.shouldAddKs() && { ks: this.config.session.ks }),
       ...defaultThumbnailApiParams,
       ...this.config?.imageSourceOptions?.thumbnailAPIParams
     };
@@ -115,6 +115,10 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
     Object.keys(thumbnailAPIParams).forEach((parmaName: string) => {
       source.url += `/${parmaName}/${thumbnailAPIParams[parmaName as keyof ThumbnailApiParams]}`;
     });
+  }
+
+  private shouldAddKs(): boolean {
+    return typeof this.config.session?.isAnonymous === 'boolean' && !this.config.session.isAnonymous;
   }
 
   private getPlayerWidth(): number {
@@ -267,3 +271,5 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
     return null;
   }
 }
+
+// https://cfvod.kaltura.com/p/2068231/sp/206823100/thumbnail/entry_id/1_ktrfo5hl/width/640/ks/djJ8MjA2ODIzMXwLffcAwHqdbNRhVIG2jMBjPwllR36gwWC5OcsAQ8g3RVgk-Xt2aOoIaZQ8QWR7MZ4CuY8_Y8zB7EH9j1Mh-ClSxxUP4NP4QM_6LK9sf1cY8A==/quality/90
