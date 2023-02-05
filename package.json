@@ -8,8 +8,11 @@
     "dist/",
     "types/"
   ],
-  "license": "Apache-2.0",
-  "homepage": "https://github.com/kaltura/playkit-js-image-player",
+  "bugs": {
+    "url": "https://github.com/kaltura/playkit-js-image-player/issues"
+  },
+  "license": "AGPL-3.0",
+  "homepage": "https://github.com/kaltura/playkit-js-image-player#readme",
   "repository": {
     "type": "git",
     "url": "https://github.com/kaltura/playkit-js-image-player"
