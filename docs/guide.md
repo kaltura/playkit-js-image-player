@@ -1,4 +1,4 @@
-# usage guide
+# Usage guide
 
 - [Getting started](#getting-started)
   - [Setup](#setup)
