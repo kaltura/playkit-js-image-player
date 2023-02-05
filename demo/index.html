@@ -70,25 +70,21 @@
       player.loadMedia({ entryId: '1_ktrfo5hl' });
 
       function loadImagesPlaylist(btnNum) {
-        player.reset();
         player.loadPlaylist({playlistId: '1_1b6sw5ze'}, {options: {autoContinue: true}});
         toggleActiveClass(btnNum);
       }
 
       function loadMixPlaylist(btnNum) {
-        player.reset();
-        player.loadPlaylist({playlistId: '1_ddzzogfp'}, {options: {autoContinue: false}});
+        player.loadPlaylist({playlistId: '1_ddzzogfp'}, {options: {autoContinue: true}});
         toggleActiveClass(btnNum);
       }
 
       function loadMedia(btnNum) {
-        player.reset();
         player.loadMedia({entryId: '1_l8avkmiw'});
         toggleActiveClass(btnNum);
       }
 
       function setMedia(btnNum) {
-        player.reset();
         player.setMedia({
           sources: {
             image: [
