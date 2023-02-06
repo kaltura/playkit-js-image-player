@@ -8,9 +8,9 @@
 [comment]: <> ([PKSourcesConfigObject]&#40;https://github.com/kaltura/playkit-js/blob/master/docs/configuration.md#type-pksourcesconfigobject&#41;)
 ## Getting started
 
-There are two modes an image playback can be played in the Kaltura player
+There are two modes an image playback can be played in the player
 
-image can be played as on of the following modes
+image can be played as one of the following modes
 
 - **Non-Durational Image**
 - **Durational image**
