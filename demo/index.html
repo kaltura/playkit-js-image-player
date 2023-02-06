@@ -46,15 +46,18 @@
     <div id="player-placeholder" style="width: 640px; height: 360px"></div>
     <div style="width: 640px;margin-top:10px;display: flex;font-family: Sans-serif">
       <div class="btn-demo demo-1" onclick="loadMedia(1)">
-        <span>Single Entry</span>
+        <span>None Durational img</span>
         <span>loadMedia()</span>
       </div>
-      <div class="btn-demo demo-2" onclick="loadImagesPlaylist(2)">Images Playlist</div>
-      <div class="btn-demo demo-3" onclick="loadMixPlaylist(3)">Mix Playlist</div>
+      <div class="btn-demo demo-3" onclick="loadDurationImg(3)">
+        <span>Durational img</span>
+        <span>loadMedia()</span>
+      </div>
       <div class="btn-demo demo-4" onclick="setMedia(4)">
-        <span>Single Entry</span>
+        <span>None Duration img</span>
         <span>setMedia()</span>
       </div>
+      <div class="btn-demo demo-2" onclick="loadImagesPlaylist(2)">Images Playlist</div>
     </div>
     <script>
       const config = {
@@ -74,13 +77,13 @@
         toggleActiveClass(btnNum);
       }
 
-      function loadMixPlaylist(btnNum) {
-        player.loadPlaylist({playlistId: '1_ddzzogfp'}, {options: {autoContinue: true}});
+      function loadDurationImg(btnNum) {
+        player.loadMedia({ entryId: '1_91d8cgyp' }, { duration: 30 });
         toggleActiveClass(btnNum);
       }
 
       function loadMedia(btnNum) {
-        player.loadMedia({entryId: '1_l8avkmiw'});
+        player.loadMedia({entryId: '1_zere6vs4'});
         toggleActiveClass(btnNum);
       }
 
@@ -90,7 +93,7 @@
             image: [
               {
                 id: '1_ktrfo5hl',
-                url: 'https://cfvod.kaltura.com/p/2068231/sp/206823100/thumbnail/entry_id/1_ktrfo5hl',
+                url: 'https://cfvod.kaltura.com/p/2068231/sp/206823100/thumbnail/entry_id/1_jgmxn561',
                 mimetype: ''
               }
             ]
