@@ -1,6 +1,6 @@
 # Usage guide
 
-- [Introduction](#Introduction)
+- [Overview](#Overview)
   - [Setup](#setup)
   - [Non Durational Image](#Non-Durational-Image)
   - [Durational Image](#Durational-Image)
@@ -10,7 +10,7 @@
 - [Full working example](https://github.com/kaltura/playkit-js-image-player/tree/master/demo)
 
 [comment]: <> ([PKSourcesConfigObject]&#40;https://github.com/kaltura/playkit-js/blob/master/docs/configuration.md#type-pksourcesconfigobject&#41;)
-## Introduction
+## Overview
 
 There are two modes an image playback can be played in the player
 
@@ -19,10 +19,10 @@ image can be played as one of the following modes
 - **Non-Durational Image**
 - **Durational image**
 
-Non-Durational Image will be displayed by the player without a seek bar and without the standard player controls (except full screen button)
+**Non-Durational** Image will be displayed by the player without a seek-bar and without the standard player controls (except full screen button)
 
-Durational Image will be played by the player as if it is a video, 
-with a seek bar and all standard player controls (except the volume control)
+**Durational Image** will be played by the player as if it is a video, 
+with a seek-bar and all standard player controls (except the volume control)
 In fact it will behave just like a video for everything
 
 If the image is played as part of a playlist, it will automatically play as a **Durational Image** with a default duration of 5 seconds
@@ -37,7 +37,7 @@ First include `playkit-image-player.js` **after** kaltura-player script in your 
 ```
 
 ### Non Durational Image
-in order to play an image entry as a Non-Durational img the duration must be set to zero 
+In order to play an image entry as a **Non-Durational** img the duration must be set to zero 
 (which is the default for an img entry loaded from the [KMC](https://kmc.kaltura.com/index.php/kmcng/login))
 
 ```js
@@ -55,7 +55,7 @@ in order to play an image entry as a Non-Durational img the duration must be set
 
 ### Durational Image
 
-in order to play an image entry as a Durational img,
+In order to play an image entry as a **Durational image**
 
 All you need to do is to set the source duration
 
@@ -65,7 +65,7 @@ The duration is part of [PKSourcesConfigObject](https://github.com/kaltura/playk
 
 Currently, the duration of an image entry type is not configurable in the [KMC](https://kmc.kaltura.com/index.php/kmcng/login)
 
-So the only way to play an img as a Durational img is to override the duration value using 
+So the only way to play an img as a **Durational image** is to override the duration value using 
 the mediaOption second parameter of `loadMedia()` or pass it through the sources object in case of the `setMedia()` API usage
 
 ```js
@@ -122,7 +122,7 @@ You can read more about The Thumbnail API configuration Parameters options [here
 
 ### Playlist
 
-Images played as part of a playlist will always be played in Durational mode (with a default duration of 5 second)
+Images played as part of a playlist will always be played in **Durational** mode (with a default duration of 5 second)
 
 ### Image Events
 
