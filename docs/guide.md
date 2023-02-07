@@ -2,8 +2,9 @@
 
 - [Getting started](#getting-started)
   - [Setup](#setup)
-  - [Non Durational Image](#Non Durational Image)
-  - [Durational Image](#Durational Image)
+  - [Non Durational Image](#Non-Durational-Image)
+  - [Durational Image](#Durational-Image)
+  - [Events](#Image-Events)
   - [Configuration](#Configuration)
 - [Full working example](https://github.com/kaltura/playkit-js-image-player/tree/master/demo)
 
@@ -117,6 +118,10 @@ The imageSourceOptions type is [ImageSourceOptions](./https://github.com/kaltura
 And the thumbnailAPIParams type is [ThumbnailApiParams](https://github.com/kaltura/playkit-js-image-player/blob/master/src/default-thumbnail-api-params.ts)
 
 You can read more about The Thumbnail API configuration Parameters options [here](https://developer.kaltura.com/api-docs/Engage_and_Publish/kaltura-thumbnail-api.html)
+
+### Image Events
+
+See [here](./events.md) The full list of image events
 
 ## Full working example
 
