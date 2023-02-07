@@ -1,6 +1,6 @@
 # Usage guide
 
-- [Getting started](#getting-started)
+- [Introduction](#Introduction)
   - [Setup](#setup)
   - [Non Durational Image](#Non-Durational-Image)
   - [Durational Image](#Durational-Image)
@@ -9,7 +9,7 @@
 - [Full working example](https://github.com/kaltura/playkit-js-image-player/tree/master/demo)
 
 [comment]: <> ([PKSourcesConfigObject]&#40;https://github.com/kaltura/playkit-js/blob/master/docs/configuration.md#type-pksourcesconfigobject&#41;)
-## Getting started
+## Introduction
 
 There are two modes an image playback can be played in the player
 
