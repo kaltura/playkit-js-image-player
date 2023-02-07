@@ -4,8 +4,9 @@
   - [Setup](#setup)
   - [Non Durational Image](#Non-Durational-Image)
   - [Durational Image](#Durational-Image)
-  - [Events](#Image-Events)
   - [Configuration](#Configuration)
+  - [Playlist](#playlist)
+  - [Events](#Image-Events)
 - [Full working example](https://github.com/kaltura/playkit-js-image-player/tree/master/demo)
 
 [comment]: <> ([PKSourcesConfigObject]&#40;https://github.com/kaltura/playkit-js/blob/master/docs/configuration.md#type-pksourcesconfigobject&#41;)
@@ -25,10 +26,6 @@ with a seek bar and all standard player controls (except the volume control)
 In fact it will behave just like a video for everything
 
 If the image is played as part of a playlist, it will automatically play as a **Durational Image** with a default duration of 5 seconds
-
-The image mode will be determined according to the duration configured with the entry
-
-> Note: The duration is part of [PKSourcesConfigObject](https://github.com/kaltura/playkit-js/blob/master/docs/configuration.md#type-pksourcesconfigobject&#41;) which is come from the kaltura backend unless you use the setMedia API
 
 ### Setup
 
@@ -62,10 +59,14 @@ in order to play an image entry as a Durational img,
 
 All you need to do is to set the source duration
 
+The image mode will be determined according to the duration configured with the entry
+
+The duration is part of [PKSourcesConfigObject](https://github.com/kaltura/playkit-js/blob/master/docs/configuration.md#type-pksourcesconfigobject&#41;) which is set by the [KMC](https://kmc.kaltura.com/index.php/kmcng/login) if you use the `loadMedia()` API
+
 Currently, the duration of an image entry type is not configurable in the [KMC](https://kmc.kaltura.com/index.php/kmcng/login)
 
-so the only way to play an img as a Durational img is to set the duration value using 
-the mediaOption parameter of loadMedia()
+So the only way to play an img as a Durational img is to override the duration value using 
+the mediaOption second parameter of `loadMedia()` or pass it through the sources object in case of the `setMedia()` API usage
 
 ```js
     const config = {
@@ -118,6 +119,10 @@ The imageSourceOptions type is [ImageSourceOptions](./https://github.com/kaltura
 And the thumbnailAPIParams type is [ThumbnailApiParams](https://github.com/kaltura/playkit-js-image-player/blob/master/src/default-thumbnail-api-params.ts)
 
 You can read more about The Thumbnail API configuration Parameters options [here](https://developer.kaltura.com/api-docs/Engage_and_Publish/kaltura-thumbnail-api.html)
+
+### Playlist
+
+Images played as part of a playlist will always be played in Durational mode (with a default duration of 5 second)
 
 ### Image Events
 
