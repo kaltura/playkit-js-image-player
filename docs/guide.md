@@ -21,7 +21,7 @@ image can be played as one of the following modes
 Non-Durational Image will be displayed by the player without a seek bar and without the standard player controls (except full screen button)
 
 Durational Image will be played by the player as if it is a video, 
-with a seek bar and all standard player controls (except volume)
+with a seek bar and all standard player controls (except the volume control)
 In fact it will behave just like a video for everything
 
 If the image is played as part of a playlist, it will automatically play as a **Durational Image** with a default duration of 5 seconds
