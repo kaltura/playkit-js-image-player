@@ -9,15 +9,19 @@
   - [Events](#Image-Events)
 - [Full working example](https://github.com/kaltura/playkit-js-image-player/tree/master/demo)
 
-[comment]: <> ([PKSourcesConfigObject]&#40;https://github.com/kaltura/playkit-js/blob/master/docs/configuration.md#type-pksourcesconfigobject&#41;)
 ## Overview
 
-There are two modes an image playback can be played in the player
+The native support for playing images in player V7 was introduced in Player 7.5.8 
+in order to provide a more comprehensive support for media content types that are managed in Kaltura, 
+and in order to provide native support for playing non-video assets
 
-image can be played as one of the following modes
+There are two types of image playbacks supported by player or in other words two modes an image can be played in:
 
 - **Non-Durational Image**
 - **Durational image**
+
+The mode an image will be played in, will be determined according to the value of the image duration 
+as will be detailed [later](#durational-image) in the guide
 
 **Non-Durational** Image will be displayed by the player without a seek-bar and without the standard player controls (except full screen button)
 
