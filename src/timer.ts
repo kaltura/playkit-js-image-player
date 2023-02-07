@@ -3,7 +3,7 @@
 import { FakeEvent, FakeEventTarget, EventType } from '@playkit-js/playkit-js';
 
 export class Timer extends FakeEventTarget {
-  private intervalID!: NodeJS.Timeout;
+  private intervalID: NodeJS.Timeout | undefined | null;
   private readonly TIME_UPDATE_RATE: number = 250;
   private _currentTime: number;
   private playbackRate: number;
@@ -27,12 +27,13 @@ export class Timer extends FakeEventTarget {
     }, this.TIME_UPDATE_RATE / this.playbackRate);
   }
 
-  private handleRestart() {
-    if (this.isTimeUp()) this.reset();
+  public end(): void {
+    clearInterval(this.intervalID!);
+    this.intervalID = null;
   }
 
-  public pause(): void {
-    clearInterval(this.intervalID);
+  private handleRestart(): void {
+    if (this.isTimeUp()) this.reset();
   }
 
   public seek(to: number): void {
@@ -41,6 +42,11 @@ export class Timer extends FakeEventTarget {
 
   public speed(playbackRate: number): void {
     this.playbackRate = playbackRate;
+
+    if (this.intervalID) {
+      this.end();
+      this.start(this.duration);
+    }
   }
 
   public get currentTime(): number {
@@ -52,13 +58,13 @@ export class Timer extends FakeEventTarget {
   }
 
   private onTimeIsUp(): void {
-    this.pause();
+    this.end();
     // @ts-ignore
     this.dispatchEvent(new FakeEvent(EventType.ENDED));
   }
 
   public reset(): void {
-    this.pause();
+    this.end();
     this._currentTime = 0;
   }
 }

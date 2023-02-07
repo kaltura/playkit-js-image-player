@@ -194,7 +194,7 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
   }
 
   public pause(): void {
-    this.timer.pause();
+    this.timer.end();
     // @ts-ignore
     this.dispatchEvent(new FakeEvent(EventType.PAUSE));
   }
