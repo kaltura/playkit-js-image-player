@@ -8,8 +8,11 @@
     "dist/",
     "types/"
   ],
-  "license": "Apache-2.0",
-  "homepage": "https://github.com/kaltura/playkit-js-image-player",
+  "bugs": {
+    "url": "https://github.com/kaltura/playkit-js-image-player/issues"
+  },
+  "license": "AGPL-3.0",
+  "homepage": "https://github.com/kaltura/playkit-js-image-player#readme",
   "repository": {
     "type": "git",
     "url": "https://github.com/kaltura/playkit-js-image-player"
@@ -29,7 +32,7 @@
     "test:debug": "DEBUG_UNIT_TESTS=1 karma start karma.conf.js --auto-watch --no-single-run --browsers Chrome",
     "test:watch": "karma start karma.conf.js --auto-watch --no-single-run",
     "types:check": "tsc src/index.ts --jsx react --jsxFactory h --noEmit --target ESNext --moduleResolution node --experimentalDecorators --jsxFragmentFactory Fragment",
-    "types:ganarate": "tsc src/index.ts src/types/global.d.ts --declaration --emitDeclarationOnly --outFile types/modules.ts --jsx react --jsxFactory h --jsxFragmentFactory Fragment --stripInternal true --target ESNext --moduleResolution node --experimentalDecorators",
+    "types:ganarate": "tsc src/index.ts --declaration --emitDeclarationOnly --outFile types/modules.ts --jsx react --jsxFactory h --jsxFragmentFactory Fragment --stripInternal true --target ESNext --moduleResolution node --experimentalDecorators",
     "docs:ganarate": "typedoc",
     "lint:check": "eslint src tests --ext .ts,.tsx,.js --color ",
     "lint:fix": "npm run lint:check -- --fix",

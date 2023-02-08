@@ -5,4 +5,4 @@
     for external usage from the auto-generated './modules.d.ts' file
 */
 
-export { PluginExampleConfig } from "types/plugin-example-config";
+export {  }

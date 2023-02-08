@@ -3,18 +3,20 @@
 import { FakeEvent, FakeEventTarget, EventType } from '@playkit-js/playkit-js';
 
 export class Timer extends FakeEventTarget {
-  private intervalID!: NodeJS.Timeout;
+  private intervalID: NodeJS.Timeout | undefined | null;
   private readonly TIME_UPDATE_RATE: number = 250;
   private _currentTime: number;
+  private playbackRate: number;
   private duration: number;
 
   constructor() {
     super();
     this._currentTime = 0;
+    this.playbackRate = 1;
     this.duration = 0;
   }
 
-  public start(duration: number, playbackRate = 1): void {
+  public start(duration: number): void {
     this.duration = duration;
     this.handleRestart();
     this.intervalID = setInterval(() => {
@@ -22,15 +24,16 @@ export class Timer extends FakeEventTarget {
       // @ts-ignore
       this.dispatchEvent(new FakeEvent(EventType.TIME_UPDATE));
       if (this.isTimeUp()) this.onTimeIsUp();
-    }, this.TIME_UPDATE_RATE / playbackRate);
+    }, this.TIME_UPDATE_RATE / this.playbackRate);
   }
 
-  private handleRestart() {
+  public end(): void {
+    clearInterval(this.intervalID!);
+    this.intervalID = null;
+  }
+
+  private handleRestart(): void {
     if (this.isTimeUp()) this.reset();
-  }
-
-  public pause(): void {
-    clearInterval(this.intervalID);
   }
 
   public seek(to: number): void {
@@ -38,8 +41,12 @@ export class Timer extends FakeEventTarget {
   }
 
   public speed(playbackRate: number): void {
-    this.pause();
-    this.start(this.duration, playbackRate);
+    this.playbackRate = playbackRate;
+
+    if (this.intervalID) {
+      this.end();
+      this.start(this.duration);
+    }
   }
 
   public get currentTime(): number {
@@ -51,13 +58,13 @@ export class Timer extends FakeEventTarget {
   }
 
   private onTimeIsUp(): void {
-    this.pause();
+    this.end();
     // @ts-ignore
     this.dispatchEvent(new FakeEvent(EventType.ENDED));
   }
 
   public reset(): void {
-    this.pause();
+    this.end();
     this._currentTime = 0;
   }
 }

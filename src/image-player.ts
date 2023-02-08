@@ -107,7 +107,7 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
   private concatenateThumbnailParams(source: any): void {
     const thumbnailAPIParams: ThumbnailApiParams = {
       width: this.getPlayerWidth(),
-      ...(!this.config.session.isAnonymous && { ks: this.config.session.ks }),
+      ...(this.shouldAddKs() && { ks: this.config.session.ks }),
       ...defaultThumbnailApiParams,
       ...this.config?.imageSourceOptions?.thumbnailAPIParams
     };
@@ -115,6 +115,10 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
     Object.keys(thumbnailAPIParams).forEach((parmaName: string) => {
       source.url += `/${parmaName}/${thumbnailAPIParams[parmaName as keyof ThumbnailApiParams]}`;
     });
+  }
+
+  private shouldAddKs(): boolean {
+    return typeof this.config.session?.isAnonymous === 'boolean' && !this.config.session.isAnonymous;
   }
 
   private getPlayerWidth(): number {
@@ -190,7 +194,7 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
   }
 
   public pause(): void {
-    this.timer.pause();
+    this.timer.end();
     // @ts-ignore
     this.dispatchEvent(new FakeEvent(EventType.PAUSE));
   }
