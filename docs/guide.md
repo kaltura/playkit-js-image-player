@@ -7,6 +7,7 @@
   - [Configuration](#Configuration)
   - [Image in a Playlist](#Image-in-a-Playlist)
   - [Events](#Image-Events)
+  - [Advertisements](#Advertisements)
 - [Full working code example](https://github.com/kaltura/playkit-js-image-player/tree/master/demo)
 
 ## Overview
@@ -131,6 +132,13 @@ Images played as part of a playlist will always be played in **Durational** mode
 ### Image Events
 
 See [here](./events.md) The full list of image events
+
+### Advertisements
+
+**Durational Image** is fully support and integrated with [IMA Plugin](https://github.com/kaltura/playkit-js-ima#readme)  
+which means you can configure any type (**pre-roll**,  **mid-roll** and **post-roll**) of ad using the [IMA Plugin](https://github.com/kaltura/playkit-js-ima#readme)
+
+**Non-Durational Image** is support only with **pre-roll** ads
 
 ## Full working code example
 
