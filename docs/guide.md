@@ -135,10 +135,10 @@ See [here](./events.md) The full list of image events
 
 ### Advertisements
 
-**Durational Image** is fully support and integrated with [IMA Plugin](https://github.com/kaltura/playkit-js-ima#readme)  
+**Durational Image** is fully supported and integrated with [IMA Plugin](https://github.com/kaltura/playkit-js-ima#readme)  
 which means you can configure any type (**pre-roll**,  **mid-roll** and **post-roll**) of ad using the [IMA Plugin](https://github.com/kaltura/playkit-js-ima#readme)
 
-**Non-Durational Image** is support only with **pre-roll** ads
+**Non-Durational Image** only **pre-roll** ads are supported
 
 ## Full working code example
 
