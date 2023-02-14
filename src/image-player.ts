@@ -50,6 +50,7 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
   }
 
   public async load(startTime: number): Promise<{ tracks: [] }> {
+    this.isLoadingStart = true;
     return new Promise((resolve, reject) => {
       this.el.onload = (): void => {
         resolve({ tracks: [] });
