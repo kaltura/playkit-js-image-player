@@ -8,6 +8,7 @@
   - [Image in a Playlist](#Image-in-a-Playlist)
   - [Events](#Image-Events)
   - [Advertisements](#Advertisements)
+  - [Analytics](#Analytics)
 - [Full working code example](https://github.com/kaltura/playkit-js-image-player/tree/master/demo)
 
 ## Overview
@@ -139,6 +140,15 @@ See [here](./events.md) The full list of image events
 which means you can configure any type (**pre-roll**,  **mid-roll** and **post-roll**) of ad using the [IMA Plugin](https://github.com/kaltura/playkit-js-ima#readme)
 
 **Non-Durational Image** only **pre-roll** ads are supported
+
+### Analytics
+
+Image entry can be integrated with [Kava](https://github.com/kaltura/playkit-js-kava#readme) and [Youbora](https://github.com/kaltura/playkit-js-youbora#readme) analytics plugins,
+In this case the reported **PlaybackType** info will be `'img'` (instead of `'Vod'` or `'Live'`)
+
+You can find [here](./events.md#kava-analytics-events) the full list of Kava Analytics events supported in Image Entry playback.
+
+
 
 ## Full working code example
 
