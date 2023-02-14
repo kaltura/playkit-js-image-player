@@ -19,6 +19,7 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
   private _playbackRate: number;
   private timer: Timer;
   private isFirstPlay: boolean;
+  private isLoadingStart: boolean;
 
   constructor(source: any, config: any) {
     super();
@@ -26,6 +27,7 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
     this._playbackRate = 1;
     this.timer = new Timer();
     this.isFirstPlay = true;
+    this.isLoadingStart = false;
     this.createImageElement();
     this.init(source, config);
   }
@@ -156,11 +158,6 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
 
   public attachMediaSource(): void {}
 
-  public destroy(): void {
-    this.reset();
-    this.el.remove();
-  }
-
   public detach(): void {}
 
   public detachMediaSource(): void {}
@@ -199,14 +196,6 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
     this.dispatchEvent(new FakeEvent(EventType.PAUSE));
   }
 
-  public reset(): void {
-    this.eventManager.removeAll();
-    // this.el.setAttribute('src', '');
-    this.isFirstPlay = true;
-    this.playbackRate = 1;
-    this.timer.reset();
-  }
-
   public resetAllCues(): void {}
 
   public restore(source: any, config: any): void {
@@ -221,6 +210,10 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
   public selectTextTrack(textTrack: TextTrack): void {}
 
   public selectVideoTrack(videoTrack: any): void {}
+
+  public get src(): string {
+    return this.isLoadingStart && this.source ? this.source.url : '';
+  }
 
   public get id(): string {
     return ImagePlayer.id;
@@ -269,5 +262,22 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
 
   public getThumbnail(time: number): null {
     return null;
+  }
+
+  public getDrmInfo(): null {
+    return null;
+  }
+
+  public reset(): void {
+    this.eventManager.removeAll();
+    this.isFirstPlay = true;
+    this.isLoadingStart = false;
+    this.playbackRate = 1;
+    this.timer.reset();
+  }
+
+  public destroy(): void {
+    this.reset();
+    this.el.remove();
   }
 }
