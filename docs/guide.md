@@ -130,6 +130,14 @@ You can read more about Thumbnail API configuration Parameters options [here](ht
 
 Images played as part of a playlist will always be played in **Durational** mode (with a default duration of 5 second)
 
+The image duration will be the same for all image items in the playlist
+
+If you want to change the default playlist image items duration you can set it through the player options configuration, as in the example below:
+
+```js
+player.loadPlaylist({ playlistId: '1_1b6sw5ze' }, { options: { imageDuration: 20 } });
+```
+
 ### Image Events
 
 See [here](./events.md) The full list of image events
