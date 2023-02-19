@@ -11,7 +11,7 @@
 
 You can find  [here](https://github.com/kaltura/playkit-js/blob/master/src/event/event-type.js) the full list of player events
 
-Of these, the following are supported in an image entry:
+Of these, the following are supported in an image playback:
 
 ### Non-Durational Image Events
 
