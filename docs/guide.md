@@ -32,18 +32,22 @@ as will be detailed [later](#durational-image) in the guide
 with a seek-bar and all standard player controls (except the volume control)
 In fact it will behave just like a video for everything
 
+The image will be aligned to the player dimensions, and maintain its aspect ratio,
+as will be detailed later in the [Size & Quality](#size--quality) section.
+
 If the image is played as part of a playlist, it will automatically play as a **Durational Image** with a default duration of 5 seconds
 
 
 ### Size & Quality
 
-The image will be aligned to the dimensions of the player, and maintain its aspect ratio.
+The **width** of the image (in pixels) to be loaded will be derived from the width of the player container
+(and the **height** from its aspect ratio.
+and will be aligned to the player (container) dimensions, while maintaining its aspect ratio,
 
-#### Size 
-To improve load time, by default the image will be loaded using the player’s width 
-(the height will be automatically calculated in the [Thumbnail API](https://developer.kaltura.com/api-docs/Engage_and_Publish/kaltura-thumbnail-api.html)). 
+#### Size
+To improve load time, by default the image size to be loaded will be derived from the player’s width as mentioned above.
 
-If you would like to load a higher quality of the image, the **width** param can be set which
+If you would like to load a higher quality of the image, the **width** param can be provided which
 will be passed to the [Thumbnail API](https://developer.kaltura.com/api-docs/Engage_and_Publish/kaltura-thumbnail-api.html) while loading the image,
 [see here the](#configuration) configuration options.
 
