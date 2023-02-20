@@ -4,6 +4,7 @@
   - [Setup](#setup)
   - [Non Durational Image](#Non-Durational-Image)
   - [Durational Image](#Durational-Image)
+  - [Size & Quality](#Size-&-Quality)
   - [Configuration](#Configuration)
   - [Image in a Playlist](#Image-in-a-Playlist)
   - [Events](#Image-Events)
@@ -32,6 +33,45 @@ with a seek-bar and all standard player controls (except the volume control)
 In fact it will behave just like a video for everything
 
 If the image is played as part of a playlist, it will automatically play as a **Durational Image** with a default duration of 5 seconds
+
+
+### Size & Quality
+
+The image will be aligned to the dimensions of the player, and maintain its aspect ratio.
+
+#### Size 
+To improve load time, by default the image will be loaded using the player’s width 
+(the height will be automatically calculated in the [Thumbnail API](https://developer.kaltura.com/api-docs/Engage_and_Publish/kaltura-thumbnail-api.html)). 
+
+If you would like to load a higher quality of the image, the **width** param can be set which
+will be passed to the [Thumbnail API](https://developer.kaltura.com/api-docs/Engage_and_Publish/kaltura-thumbnail-api.html) while loading the image,
+[see here the](#configuration) configuration options.
+
+#### Quality
+By default, the image will be loaded at the best possible quality.
+But if you prefer to improve load time instead, [this can be configurable](#configuration) (0-100 integer).
+
+#### Full-screen
+When the player enters into FullScreen mode, the image will automatically be reloaded
+with the new player width to improve the quality of the image being rendered in full screen.
+
+#### Responsiveness
+
+Don't confuse the image aspect ratio with the player aspect ratio
+while the image aspect ratio will be kept, the player ratio will not.
+
+Which will sometimes create blank areas around the image as long as their aspect ratio is different
+
+Therefore, if your container size is not set to fixed size but responsive in adapting to the screen size, 
+and you want to avoid the blank areas, you can set the player container aspect ratio along with the container size,
+with the same aspect ratio as the image, for example, given your original image is -  4 / 3 ratio, 
+and you want to set the player size to be - 400px * 300px, then you can do:
+
+```html
+  <div id="player-container-id" style="width:50%;aspect-ratio: 4 / 3;"></div>
+```
+In this way, the player aspect ratio will always be the same as the image aspect ratio on any screen size.
+
 
 ### Setup
 
@@ -114,7 +154,8 @@ and under the `imageSourceOptions` configuration option
     player.loadMedia({ entryId: '1_ktrfo5hl' }, {
        imageSourceOptions: {
          thumbnailAPIParams: {
-           quality: 100
+           quality: 100,
+           width: 1000
          }
        }
     });
@@ -155,8 +196,6 @@ Image entry can be integrated with [Kava](https://github.com/kaltura/playkit-js-
 In this case the reported **PlaybackType** info will be `'img'` (instead of `'Vod'` or `'Live'`)
 
 You can find [here](./events.md#kava-analytics-events) the full list of Kava Analytics events supported in Image Entry playback.
-
-
 
 ## Full working code example
 
