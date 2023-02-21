@@ -20,6 +20,7 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
   private timer: Timer;
   private isFirstPlay: boolean;
   private isLoadingStart: boolean;
+  private isReloadedOnfullscreen: boolean;
 
   constructor(source: any, config: any) {
     super();
@@ -28,6 +29,7 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
     this.timer = new Timer();
     this.isFirstPlay = true;
     this.isLoadingStart = false;
+    this.isReloadedOnfullscreen = false;
     this.createImageElement();
     this.init(source, config);
   }
@@ -71,6 +73,9 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
     this.eventManager.listen(this.timer, EventType.ENDED, (event: FakeEvent) => this.dispatchEvent(event));
     // @ts-ignore
     this.eventManager.listen(this.timer, EventType.TIME_UPDATE, (event: FakeEvent) => this.dispatchEvent(event));
+    this.eventManager.listen(document.getElementById(this.config.targetId), 'fullscreenchange', (event: string) => {
+      this.reloadHigherQualityOnFullscreen();
+    });
   }
 
   public play(): Promise<void> {
@@ -126,6 +131,16 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
 
   private getPlayerWidth(): number {
     return document.getElementById(this.config.targetId)!.offsetWidth;
+  }
+
+  private reloadHigherQualityOnFullscreen(): void {
+    if (document.fullscreenElement && !this.isReloadedOnfullscreen) {
+      this.source.url = this.source.url.replace(/\/width\/([0-9]+)\//, `/width/${document.body.offsetWidth}/`);
+      this.load(0).then(() => {
+        ImagePlayer._logger.debug('Entering fullscreen mode - image reloaded');
+      });
+      this.isReloadedOnfullscreen = true;
+    }
   }
 
   public static isSupported(): boolean {
@@ -273,6 +288,7 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
     this.eventManager.removeAll();
     this.isFirstPlay = true;
     this.isLoadingStart = false;
+    this.isReloadedOnfullscreen = false;
     this.playbackRate = 1;
     this.timer.reset();
   }

@@ -26,5 +26,5 @@ export type ThumbnailApiParams = {
 };
 
 export const defaultThumbnailApiParams: ThumbnailApiParams = {
-  quality: 90
+  quality: 100
 };
