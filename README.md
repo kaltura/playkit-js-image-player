@@ -4,7 +4,7 @@
 
 # playkit-js-image-player
 
-playkit-js-image-player is a [kaltura player] plugin that adds an engine enabling [kaltura player] to play an image
+playkit-js-image-player is a [kaltura player] engine enabling [kaltura player] to play an image
 
 playkit-js-image-player is written in [ECMAScript6] (`*.js`) and [TypeScript] (`*.ts`) (strongly typed superset of ES6), 
 and transpiled in ECMAScript5 using [Babel](https://babeljs.io/) and the [TypeScript compiler].
@@ -126,8 +126,6 @@ An overview of this project's design, can be found [here](https://kaltura.atlass
 
 
 ## Compatibility
-
-playkit-js-image-player is only compatible with browsers supporting MediaSource extensions (MSE) API with 'video/MP4' mime-type inputs.
 
 playkit-js-image-player is supported on:
 
