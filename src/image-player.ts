@@ -135,11 +135,15 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
 
   private reloadHigherQualityOnFullscreen(): void {
     if (document.fullscreenElement && !this.isReloadedOnfullscreen) {
-      this.source.url = this.source.url.replace(/\/width\/([0-9]+)\//, `/width/${document.body.offsetWidth}/`);
-      this.load(0).then(() => {
-        ImagePlayer._logger.debug('Entering fullscreen mode - image reloaded');
-      });
-      this.isReloadedOnfullscreen = true;
+      const currentWidth = this.getPlayerWidth();
+      const fullscreenWidth = document.body.offsetWidth;
+      if (currentWidth < fullscreenWidth) {
+        this.source.url = this.source.url.replace(/\/width\/([0-9]+)\//, `/width/${document.body.offsetWidth}/`);
+        this.load(0).then(() => {
+          ImagePlayer._logger.debug('Entering fullscreen mode - image reloaded');
+        });
+        this.isReloadedOnfullscreen = true;
+      }
     }
   }
 
