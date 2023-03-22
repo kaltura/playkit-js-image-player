@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.3](https://github.com/kaltura/playkit-js-image-player/compare/v1.2.1...v1.2.3) (2023-03-22)
+
+
+### Bug Fixes
+
+* **FEC-12978:** Prevent image reloading on fullscreen on mobile ([#12](https://github.com/kaltura/playkit-js-image-player/issues/12)) ([5e8874a](https://github.com/kaltura/playkit-js-image-player/commit/5e8874a2131b30df4ed48c9e7cadaf35a0be50d9))
+
 ### [1.2.2](https://github.com/kaltura/playkit-js-image-player/compare/v1.2.1...v1.2.2) (2023-03-22)
 
 
