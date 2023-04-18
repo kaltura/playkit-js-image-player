@@ -24,4 +24,3 @@ jobs:
       type: "plugin"
       stage: "canary"
       schema-type: "playerV3Versions"
-      tests-yarn-run-to-execute:  'build:prod lint:check types:check test'
