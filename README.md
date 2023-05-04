@@ -1,4 +1,4 @@
-# playkit-js-image-player
+# PlayKit JS Image Player - Image Player plugin for the [PlayKit JS Player]
 
 [![Build Status](https://github.com/kaltura/playkit-js-image-player/actions/workflows/run_canary_full_flow.yaml/badge.svg)](https://github.com/kaltura/playkit-js-image-player/actions/workflows/run_canary_full_flow.yaml)
 [![](https://img.shields.io/npm/v/@playkit-js/image-player/latest.svg)](https://www.npmjs.com/package/@playkit-js/image-player)
