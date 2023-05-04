@@ -1,8 +1,8 @@
-[![Build Status](https://app.travis-ci.com/kaltura/playkit-js-image-player.svg?branch=master)](https://app.travis-ci.com/kaltura/playkit-js-image-player)
+# playkit-js-image-player
+
+[![Build Status](https://github.com/kaltura/playkit-js-image-player/actions/workflows/run_canary_full_flow.yaml/badge.svg)](https://github.com/kaltura/playkit-js-image-player/actions/workflows/run_canary_full_flow.yaml)
 [![](https://img.shields.io/npm/v/@playkit-js/image-player/latest.svg)](https://www.npmjs.com/package/@playkit-js/image-player)
 [![](https://img.shields.io/npm/v/@playkit-js/image-player/canary.svg)](https://www.npmjs.com/package/@playkit-js/image-player/v/canary)
-
-# playkit-js-image-player
 
 playkit-js-image-player is a [kaltura player] engine enabling [kaltura player] to play an image
 
