@@ -3,7 +3,7 @@ delete webpackConfig.entry;
 delete webpackConfig.externals;
 delete webpackConfig.output;
 delete webpackConfig.devServer;
-webpackConfig.devtool = 'inline-source-map'
+webpackConfig.devtool = 'inline-source-map';
 
 module.exports = function (config) {
   config.set({
@@ -28,7 +28,7 @@ module.exports = function (config) {
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     // node_modules must not be webpacked or else Karma will fail to load frameworks
     preprocessors: {
-      'tests/index.js': ['webpack', 'sourcemap'],
+      'tests/index.js': ['webpack', 'sourcemap']
     },
 
     // test results reporter to use
@@ -38,7 +38,7 @@ module.exports = function (config) {
 
     coverageIstanbulReporter: {
       reports: ['lcov', 'text-summary'],
-      fixWebpackSourcePaths: true,
+      fixWebpackSourcePaths: true
     },
 
     webpack: webpackConfig,
