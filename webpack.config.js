@@ -49,7 +49,6 @@ module.exports = (env, { mode }) => {
       clean: true
     },
     externals: {
-      // 'kaltura-player-js': 'root KalturaPlayer',
       "@playkit-js/playkit-js": ["KalturaPlayer", "core"]
     },
     devServer: {
