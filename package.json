@@ -27,7 +27,6 @@
     "dev": "npm run build:dev && webpack serve --open --mode development",
     "watch": "webpack --watch --mode development",
     "build:dev": "webpack --mode development",
-    "build:prod": "webpack --mode production",
     "build": "webpack --mode production",
     "test": "karma start --color --mode development",
     "test:debug": "DEBUG_UNIT_TESTS=1 karma start karma.conf.js --auto-watch --no-single-run --browsers Chrome",
