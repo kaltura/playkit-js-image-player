@@ -49,6 +49,7 @@ export class ImagePlayer extends FakeEventTarget implements IEngine {
   private createImageElement(): void {
     this.el = document.createElement('img');
     this.el.id = Utils.Generator.uniqueId(5);
+    this.el.alt = '';
   }
 
   public async load(startTime: number): Promise<{ tracks: [] }> {
