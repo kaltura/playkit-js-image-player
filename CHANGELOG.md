@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 1.2.7 (2025-07-17)
+
+
+### Bug Fixes
+
+* **ADA-2838:** Add alt attribute to img ([#20](https://github.com/kaltura/playkit-js-image-player/issues/20)) ([e3adfd9](https://github.com/kaltura/playkit-js-image-player/commit/e3adfd9d64b203bc49626c1b0fd1a0e0be4ed83f))
+
 ### 1.2.6 (2023-09-11)
 
 ### 1.2.5 (2023-05-17)
