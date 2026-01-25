@@ -1,5 +1,6 @@
 const path = require('path');
 const {insertStylesWithNonce} = require('@playkit-js/webpack-common');
+const packageData = require('./package.json');
 
 module.exports = (env, { mode }) => {
   return {
