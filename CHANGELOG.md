@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 1.3.0 (2026-01-29)
+
+
+### Features
+
+* **FEC-14869:** Adding nonce support ([#22](https://github.com/kaltura/playkit-js-image-player/issues/22)) ([0b22c6d](https://github.com/kaltura/playkit-js-image-player/commit/0b22c6debb963d12dd82a7786fb4e9a44344715b))
+
 ### 1.2.7 (2025-07-17)
 
 
