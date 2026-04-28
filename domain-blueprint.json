@@ -1,0 +1,87 @@
+{
+  "repository": "playkit-js-image-player",
+  "package_name": "@playkit-js/image-player",
+  "core_responsibility": "A PlayKit JS engine plugin that enables the Kaltura Player to display and playback static image media entries with optional timed duration support, simulating video-like playback controls for images.",
+  "component_type": "engine_plugin",
+  "domain_and_logic_ownership": {
+    "feature_ownership": [
+      "Image media playback engine for Kaltura Player",
+      "Non-durational image display (static images without timeline)",
+      "Durational image playback (images with simulated video timeline)",
+      "Thumbnail API integration for image loading and quality control",
+      "Fullscreen image quality enhancement (automatic higher resolution reload)",
+      "Playlist image duration support (default 5-second auto-advance)",
+      "Simulated playback controls for images (play, pause, seek, playback rate)",
+      "Timer-based time update and ended event simulation"
+    ],
+    "data_handling": [
+      "Image source URL management and thumbnail API parameter concatenation",
+      "Timer state machine for durational image playback (currentTime, duration, playbackRate)",
+      "Player event dispatching (LOAD_START, LOADED_METADATA, PLAY, PAUSE, TIME_UPDATE, ENDED, SEEKED, RATE_CHANGE)",
+      "Kaltura Session (ks) handling for authenticated image requests",
+      "Fullscreen state tracking for quality enhancement"
+    ]
+  },
+  "integration_points": {
+    "upstream": [
+      "@playkit-js/playkit-js (core player library - IEngine interface, FakeEventTarget, EventManager, EventType)",
+      "Kaltura Thumbnail API (image delivery and transformation service)"
+    ],
+    "downstream": [
+      "@playkit-js/kaltura-player-js (main Kaltura Player that consumes this engine)",
+      "playkit-js-ui (player UI components that display controls)",
+      "playkit-js-ima (IMA advertising plugin - pre-roll, mid-roll, post-roll ads)",
+      "playkit-js-kava (Kaltura analytics plugin)",
+      "playkit-js-youbora (Youbora analytics plugin)"
+    ],
+    "external_apis": [
+      "Kaltura Thumbnail API (https://developer.kaltura.com/api-docs/Engage_and_Publish/kaltura-thumbnail-api.html)"
+    ]
+  },
+  "technical_stack": {
+    "primary_languages": ["TypeScript", "JavaScript"],
+    "frameworks_and_tools": [
+      "Webpack (bundling)",
+      "Babel (transpilation)",
+      "Karma/Mocha/Chai (testing)",
+      "ESLint/Prettier (linting/formatting)"
+    ],
+    "entry_points": [
+      "src/index.ts (engine registration entry point)",
+      "src/image-player.ts (main ImagePlayer class implementing IEngine interface)",
+      "src/timer.ts (Timer class for durational playback simulation)",
+      "src/default-thumbnail-api-params.ts (thumbnail API parameter types and defaults)"
+    ],
+    "output_artifact": "dist/playkit-image-player.js"
+  },
+  "triage_keywords": [
+    "image player",
+    "image entry",
+    "image playback",
+    "durational image",
+    "non-durational image",
+    "thumbnail API",
+    "image duration",
+    "playlist image",
+    "image quality",
+    "image fullscreen",
+    "img entry type",
+    "image engine",
+    "PlaybackType img",
+    "image not loading",
+    "image not displaying"
+  ],
+  "error_patterns": [
+    "The image failed to load",
+    "image entry playback",
+    "ImagePlayer",
+    "image engine registration",
+    "thumbnail url",
+    "image source",
+    "durational mode",
+    "image timer",
+    "image seek",
+    "image ended event"
+  ],
+  "version": "1.3.0"
+}
